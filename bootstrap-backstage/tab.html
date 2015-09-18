@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        .content-tabs li a i {
+            margin-left: 5px;
+            margin-right: -10px;
+        }
+    </style>
+</head>
+<body>
+<ul class="nav nav-tabs content-tabs">
+    <li role="presentation" class="active"><a href="#workspace" role="tab" data-toggle="tab">workspace</a></li>
+    <li role="presentation"><a href="#home" role="tab" data-toggle="tab">Home<i class="glyphicon"></i></a></li>
+    <li role="presentation"><a href="#profile" role="tab" data-toggle="tab">Profile<i class="glyphicon"></i></a></li>
+    <li role="presentation"><a href="#messages" role="tab" data-toggle="tab">Message<i class="glyphicon"></i></a></li>
+    <li role="presentation"><a href="#settings" role="tab" data-toggle="tab">Setting<i class="glyphicon"></i></a></li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="workspace">工作区</div>
+    <div class="tab-pane" id="home">主页</div>
+    <div class="tab-pane" id="profile">简介</div>
+    <div class="tab-pane" id="messages">消息</div>
+    <div class="tab-pane" id="settings">设置</div>
+</div>
+
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<script>
+    $(function () {
+
+        $('.content-tabs li a').click(function (e) {
+            e.preventDefault();//阻止a链接的跳转行为
+
+            $('.content-tabs i').removeClass('glyphicon-remove');
+            $(this).find('i').addClass('glyphicon-remove');
+
+            $(this).tab('show');//显示当前选中的链接及关联的content
+
+        });
+
+        $('.content-tabs a i').click(function () {
+
+            // 关闭当期页，激活workspace
+            $(this).parent().parent().remove();
+            openTab('workspace');
+
+        });
+
+
+        /**
+         *关闭tab
+         * @param closeId 关闭tab的id
+         * @param openId 打开tab的id
+         */
+        function closeTab(closeId, openId) {
+            $('#' + closeId).remove();
+            $(closeId).remove();
+            if (!isEmptyString(openId)) {
+                openTab(openId);
+            }
+        }
+
+        /**
+         * 打开tab
+         * @param openId 打开tab的id，如workspace工作区
+         */
+        function openTab(openId) {
+            $('#' + openId).click();
+        }
+
+        /**
+         * Object是否为空
+         * @param obj 需要检查的Object
+         * @returns 如果为空，返回true，否则返回false
+         */
+        function isNullObject(obj) {
+            return typeOf(obj) != "object";
+        }
+
+        /**
+         * 字符串是否为空
+         * @param str 需要检查的字符串
+         * @returns  如果为空，返回true，否则返回false
+         */
+        function isEmptyString(str) {
+            if (str == undefined) {
+                return true;
+            }
+            var temp = str + '';
+            temp = $.trim(temp);
+            return temp.length == 0;
+        }
+
+    })
+</script>
+
+</body>
+</html>
